@@ -54,7 +54,7 @@ describe('References', function() {
         });
     });
 
-    it('should never follow inner references.', function() {
+    xit('should never follow inner references.', function() {
         getCoreRunner({
             input: [['circular', 'title']],
             output: {

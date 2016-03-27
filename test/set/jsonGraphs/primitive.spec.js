@@ -1,6 +1,7 @@
 var $ref = require("falcor-json-graph").ref;
 var strip = require("../support/strip");
 var $atom = require("falcor-json-graph").atom;
+var $refset = require("falcor-json-graph").refset;
 var $pathValue = require("falcor-json-graph").pathValue;
 var $jsonGraph = require("../support/jsonGraph");
 var $jsonGraphEnvelope = require("../support/jsonGraphEnvelope");
@@ -210,6 +211,53 @@ describe("a primitive value", function() {
     });
 
     describe("in multiple places", function() {
+        it("through a refset that crosses an inner reference", function() {
+
+            var lru = new Object();
+            var cache = {};
+            var version = 0;
+
+            setJSONGraphs(
+                getModel({ lru: lru, cache: cache, version: version++ }), [
+                $jsonGraphEnvelope([
+                    $pathValue("grid", $ref("grids['id']")),
+                    $pathValue("grids['id'][0]", $ref("lists['id']")),
+                    $pathValue("grids['id']['action-titles']", $refset("grids['id'][0][0, 1]")),
+                    $pathValue("lists['id'][0]", $ref("movies['pulp-fiction']")),
+                    $pathValue("lists['id'][1]", $ref("movies['kill-bill-1']")),
+                    $pathValue("movies['pulp-fiction']", "Pulp Fiction"),
+                    $pathValue("movies['kill-bill-1']", "Kill Bill: Vol. 1")
+                ])]
+            );
+
+            setJSONGraphs(
+                getModel({ lru: lru, cache: cache, version: version++ }), [
+                $jsonGraphEnvelope([
+                    $pathValue("grid", $ref("grids['id']")),
+                    $pathValue("grids['id'][0]", $ref("lists['id']")),
+                    $pathValue("grids['id']['action-titles']", $refset("grids['id'][0][0, 1]")),
+                    $pathValue("lists['id'][0]", $ref("movies['pulp-fiction']")),
+                    $pathValue("lists['id'][1]", $ref("movies['kill-bill-1']")),
+                    $pathValue("grid['action-titles'].director", "Quentin Tarantino")
+                ])]
+            );
+
+            expect(strip(cache)).to.deep.equal(strip({
+                grid: $ref("grids['id']"),
+                grids: { id: {
+                    0: $ref("lists['id']"),
+                    'action-titles': $refset("grids['id'][0][0, 1]")
+                } },
+                lists: { id: {
+                    0: $ref("movies['pulp-fiction']"),
+                    1: $ref("movies['kill-bill-1']")
+                } },
+                movies: {
+                    "pulp-fiction": { "director": $atom("Quentin Tarantino") },
+                    "kill-bill-1": { "director": $atom("Quentin Tarantino") },
+                }
+            }));
+        });
         describe("via keyset", function() {
             it("directly", function() {
 
