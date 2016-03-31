@@ -22,27 +22,24 @@ describe('Missing', function() {
         getCoreRunner({
             input: [['missing', 'title']],
             output: {
-                "json": {
-                    "missing": undefined
-                }
+                "json": {}
             },
             requestedMissingPaths: [['missing', 'title']],
             optimizedMissingPaths: [['toMissing', 'title']],
             cache: missingCache
         });
     });
-    it('should report a missing path.', function() {
+    it('should report a missing pathset.', function() {
         getCoreRunner({
             input: [['multi', {to: 1}, 0, 'title']],
             output: {
                 "json": {
                     "multi": {
-                        "0": { "$__path": ["multi", "0"] },
                         "1": {
-                            "0": { "$__path": [ "multi", "1", "0"] },
-                            "$__path": ["multi", "1"]
+                            "$path": ["multi", "1"]
                         },
-                        "$__path": ["multi"]
+                        "$keys": {"to":1},
+                        "$path": ["multi"]
                     }
                 }
             },
@@ -76,14 +73,23 @@ describe('Missing', function() {
                 "json": {
                     "0": {
                         "0": {
-                            "0": { "$__path": ["0", "0", "0"] },
-                            "1": { "$__path": ["0", "0", "1"] },
-                            "$__path": ["0", "0"]
+                            "0": { "$path": ["0", "0", "0"] },
+                            "1": { "$path": ["0", "0", "1"] },
+                            "$path": ["0", "0"],
+                            "$keys": {"to":1}
                         },
-                        "1": { "$__path": ["0", "1"] },
-                        "$__path": ["0"]
+                        "1": {
+                            "$path": ["0", "1"],
+                            "$keys": {"to":1}
+                        },
+                        "$path": ["0"],
+                        "$keys": {"to":1}
                     },
-                    "1": { "$__path": ["1"] }
+                    "1": {
+                        "$path": ["1"],
+                        "$keys": {"to":1}
+                    },
+                    "$keys": {"to":1}
                 }
             },
             optimizedMissingPaths: [

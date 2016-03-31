@@ -112,11 +112,11 @@ describe("Special Cases", function() {
                                 "title": "Running Man",
                                 "url": "/movies/553"
                             },
-                            "$__path": ["videos", 553]
+                            "$path": ["videos", 553]
                         },
-                        "$__path": ["lists", "1x5x"]
+                        "$path": ["lists", "1x5x"]
                     },
-                    "$__path": ["genreList"]
+                    "$path": ["genreList"]
                 }
             }
         });

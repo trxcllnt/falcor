@@ -7,6 +7,7 @@ module.exports = {
     clean: clean,
     strip: strip,
     internalKeys: internalKeys,
+    convert: convert,
     convertKey: convert,
     convertModelCreatedAtoms: convertModelCreatedAtoms,
     convertNodes: function convertNodesHeader(obj, transform) {
@@ -15,8 +16,7 @@ module.exports = {
     stripDerefAndVersionKeys: function(item) {
         strip.apply(null, [item, '$size'].concat(internalKeys));
         return item;
-    },
-    traverseAndConvert: traverseAndConvert
+    }
 };
 
 function convertModelCreatedAtoms(cache) {
@@ -36,7 +36,6 @@ function clean(item, options) {
     };
 
     strip.apply(null, [item].concat(options.strip));
-    traverseAndConvert(item);
 
     return item;
 }
@@ -68,31 +67,6 @@ function convert(obj, config) {
         Object.keys(obj).forEach(function(k) {
             if (typeof obj[k] === "object" && !Array.isArray(obj[k])) {
                 convert(obj[k], config);
-            }
-        });
-    }
-    return obj;
-}
-
-function traverseAndConvert(obj) {
-    if (Array.isArray(obj)) {
-        for (var i = 0; i < obj.length; i++) {
-            if (typeof obj[i] === "object") {
-                traverseAndConvert(obj[i]);
-            } else if (typeof obj[i] === "number") {
-                obj[i] = obj[i] + "";
-            } else if(typeof obj[i] === "undefined") {
-                obj[i] = null;
-            }
-        }
-    } else if (obj != null && typeof obj === "object") {
-        Object.keys(obj).forEach(function(k) {
-            if (typeof obj[k] === "object") {
-                traverseAndConvert(obj[k]);
-            } else if (typeof obj[k] === "number") {
-                obj[k] = obj[k] + "";
-            } else if(typeof obj[k] === "undefined") {
-                obj[k] = null;
             }
         });
     }

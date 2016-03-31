@@ -6,6 +6,18 @@ var convert = require('./cleanData').convert;
 var internalKeys = require('./../lib/internal');
 var getCachePosition = require('./../lib/get/getCachePosition');
 
+function convertPathKeys($path) {
+    return $path.map(function convertPathKey(keyset) {
+        if (!keyset || typeof keyset !== 'object') {
+            return keyset + "";
+        } else if (Array.isArray(keyset)) {
+            return convertPathKeys(keyset);
+        } else {
+            return keyset;
+        }
+    });
+}
+
 module.exports = function(testConfig) {
     var isJSONG = testConfig.isJSONG;
 
@@ -85,8 +97,10 @@ module.exports = function(testConfig) {
     // $size is stripped out of basic core tests.
     // We have to strip out parent as well from the output since it will produce
     // infinite recursion.
-    clean(seed[0], {strip: ['$size']});
-    clean(expectedOutput, {strip: ['$size']});
+    clean(seed[0], {strip: ['$size', '$version']});
+    convert(seed[0], { "$path": convertPathKeys });
+    clean(expectedOutput, {strip: ['$size', '$version']});
+    convert(expectedOutput, { "$path": convertPathKeys });
 
     if (expectedOutput) {
         expect(seed[0]).to.deep.equals(expectedOutput);

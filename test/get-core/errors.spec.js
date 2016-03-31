@@ -31,7 +31,7 @@ describe('Errors', function() {
             output: {
                 "json": {
                     "to": {
-                        "$__path": ["to"]
+                        "$path": ["to"]
                     }
                 }
             },
@@ -48,7 +48,7 @@ describe('Errors', function() {
             output: {
                 "json": {
                     "reference": {
-                        "$__path": ["reference"]
+                        "$path": ["reference"]
                     }
                 }
             },
@@ -63,7 +63,7 @@ describe('Errors', function() {
         var to = {
             error: 'Oops!'
         };
-        to.$__path = ['to'];
+        to.$path = ['to'];
         getCoreRunner({
             input: [['to', 'error']],
             output: {
@@ -79,7 +79,7 @@ describe('Errors', function() {
         var to = {
             error: error('Oops!')
         };
-        to.$__path = ['to'];
+        to.$path = ['to'];
         getCoreRunner({
             input: [['to', 'error']],
             output: {
@@ -98,7 +98,7 @@ describe('Errors', function() {
             output: {
                 "json": {
                     "to": {
-                        "$__path": ["to"]
+                        "$path": ["to"]
                     }
                 }
             },
@@ -115,11 +115,11 @@ describe('Errors', function() {
                 title: 'Hello World'
             },
             1: {
-                $__path: ["list", 1]
+                $path: ["list", 1]
             }
         };
-        list.$__path = ['list'];
-        list[0].$__path = ['to'];
+        list.$path = ['list'];
+        list[0].$path = ['to'];
         getCoreRunner({
             input: [
                 ['list', {to: 1}, 'title']

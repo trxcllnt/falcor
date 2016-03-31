@@ -11,7 +11,6 @@ var Rx = require('rx');
 var cleanData = require('./cleanData');
 var clean = cleanData.clean;
 var strip = cleanData.strip;
-var traverseAndConvert = cleanData.traverseAndConvert;
 var __key = require("../lib/internal/key");
 
 module.exports = {
@@ -39,7 +38,6 @@ module.exports = {
             universalExpectedValues: universalExpectedValues
         };
     },
-    convertIntegers: traverseAndConvert,
     clean: function(item, strip) {
         strip = strip || [];
         return clean(item, {strip: strip});
@@ -105,9 +103,6 @@ function validateData(expected, actual) {
 function validateOperation(name, expected, actual, messageSuffix) {
     expected = _.cloneDeep(expected);
 
-    // Removes all 5 !== "5" errors when it comes to pathValues.
-    traverseAndConvert(actual);
-    traverseAndConvert(expected);
     strip(expected, __key);
     strip(actual, __key, "pathSetIndex");
 

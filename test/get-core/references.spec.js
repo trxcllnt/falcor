@@ -27,7 +27,7 @@ describe('References', function() {
         var toReference = {
             title: 'Title'
         };
-        toReference.$__path = ['too'];
+        toReference.$path = ['too'];
 
         // Should be the second references reference not
         // toReferences reference.
@@ -73,8 +73,8 @@ describe('References', function() {
             },
             toValue: 'Title'
         };
-        to.$__path = ['to'];
-        to.reference.$__path = ['too'];
+        to.$path = ['to'];
+        to.reference.$path = ['too'];
 
         getCoreRunner({
             input: [
@@ -98,19 +98,19 @@ describe('References', function() {
             output: {
                 json: {
                     lolomo: {
-                        $__path: ['lolomos', 1234],
+                        $path: ['lolomos', 1234],
                         $__refPath: ['lolomos', 1234],
                         $__toReference: ['lolomo'],
                         0: {
-                            $__path: ['lists', 'A'],
+                            $path: ['lists', 'A'],
                             $__refPath: ['lists', 'A'],
                             $__toReference: ['lolomos', 1234, 0],
                             0: {
-                                $__path: ['lists', 'A', 0],
+                                $path: ['lists', 'A', 0],
                                 $__refPath: ['lists', 'A'],
                                 $__toReference: ['lolomos', 1234, 0],
                                 item: {
-                                    $__path: ['videos', 0],
+                                    $path: ['videos', 0],
                                     $__refPath: ['videos', 0],
                                     $__toReference: ['lists', 'A', 0, 'item'],
                                     title: 'Video 0'

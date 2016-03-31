@@ -17,7 +17,7 @@ describe('Edges', function() {
             output: {
                 "json": {
                     "videos": {
-                        "$__path": ["videos"]
+                        "$path": ["videos"]
                     }
                 }
             },
@@ -70,8 +70,8 @@ describe('Edges', function() {
                 }
             }
         };
-        output.videos.$__path = ['videos']
-        output.videos[1234].$__path = ['videos', 1234];
+        output.videos.$path = ['videos']
+        output.videos[1234].$path = ['videos', 1234];
 
         getCoreRunner({
             input: [['videos', 1234, 'title']],
@@ -97,8 +97,8 @@ describe('Edges', function() {
             output: {
               "json": {
                 "videos": {
-                  "1234": { "$__path": ["videos", "1234"] },
-                  "$__path": ["videos"]
+                  "1234": { "$path": ["videos", "1234"] },
+                  "$path": ["videos"]
                 }
               }
             },
@@ -122,7 +122,7 @@ describe('Edges', function() {
             output: {
                 "json": {
                     "videos": {
-                        "$__path": ["videos"]
+                        "$path": ["videos"]
                     }
                 }
             },
