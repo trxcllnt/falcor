@@ -101,12 +101,24 @@ describe("Special Cases", function() {
             }
         });
 
-        model._getPathValuesAsPathMap(model, get, function(x) {
-            expect(x).to.deep.equals({ json: { genreList: { 1: { 0: { summary: {
-                    "title": "Running Man",
-                    "url": "/movies/553"
-                } } } } }
-            });
+        var x = model._getPathValuesAsPathMap(model, get, [{}]).values[0];
+
+        expect(x).to.deep.equals({
+            json: {
+                genreList: {
+                    1: {
+                        0: {
+                            "summary": {
+                                "title": "Running Man",
+                                "url": "/movies/553"
+                            },
+                            "$__path": ["videos", 553]
+                        },
+                        "$__path": ["lists", "1x5x"]
+                    },
+                    "$__path": ["genreList"]
+                }
+            }
         });
     });
 });

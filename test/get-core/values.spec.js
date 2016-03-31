@@ -132,7 +132,16 @@ describe('Values', function() {
     it('should have no output for empty paths.', function() {
         getCoreRunner({
             input: [['lolomo', 0, [], 'item', 'title']],
-            output: {},
+            output: {
+              "json": {
+                "lolomo": {
+                  "0": {
+                    "$__path": ["lists", "A"]
+                  },
+                  "$__path": ["lolomos", "1234"]
+                }
+              }
+            },
             cache: cacheGenerator(0, 1)
         });
     });
@@ -203,7 +212,8 @@ describe('Values', function() {
             }
         });
     });
-    it('should get JSONGraph through references.', function() {
+    it.only('should get JSONGraph through references.', function() {
+        debugger;
         getCoreRunner({
             input: [['lolomo', 0, 0, 'item', 'title']],
             isJSONG: true,

@@ -28,7 +28,13 @@ describe('Errors', function() {
     it('should report error with path.', function() {
         getCoreRunner({
             input: [['to', 'error']],
-            output: { },
+            output: {
+                "json": {
+                    "to": {
+                        "$__path": ["to"]
+                    }
+                }
+            },
             errors: [{
                 path: ['to', 'error'],
                 value: 'Oops!'
@@ -39,7 +45,13 @@ describe('Errors', function() {
     it('should report error path with null from reference.', function() {
         getCoreRunner({
             input: [['reference', 'title']],
-            output: { },
+            output: {
+                "json": {
+                    "reference": {
+                        "$__path": ["reference"]
+                    }
+                }
+            },
             errors: [{
                 path: ['reference', null],
                 value: 'Oops!'
@@ -83,7 +95,13 @@ describe('Errors', function() {
     it('should not report an expired error.', function() {
         getCoreRunner({
             input: [['to', 'expired']],
-            output: { },
+            output: {
+                "json": {
+                    "to": {
+                        "$__path": ["to"]
+                    }
+                }
+            },
             optimizedMissingPaths: [
                 ['to', 'expired']
             ],
@@ -95,6 +113,9 @@ describe('Errors', function() {
         var list = {
             0: {
                 title: 'Hello World'
+            },
+            1: {
+                $__path: ["list", 1]
             }
         };
         list.$__path = ['list'];

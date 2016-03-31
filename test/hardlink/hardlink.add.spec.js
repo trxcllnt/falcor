@@ -14,6 +14,11 @@ var Bound = Expected.Bound;
 var noOp = function() {};
 var _ = require('lodash');
 
+var __id = require("./../../lib/internal/id");
+var __innerRefs = require("./../../lib/internal/innerRefs");
+var __priorRefs = require("./../../lib/internal/priorRefs");
+var __refTarget = require("./../../lib/internal/refTarget");
+
 var __ref = require("./../../lib/internal/ref");
 var __context = require("./../../lib/internal/context");
 var __ref_index = require("./../../lib/internal/ref-index");
@@ -68,16 +73,22 @@ function getTest(query, output) {
     var lhs = model._root.cache.genreList[0];
     var rhs = model._root.cache.lists.abcd;
 
-    expect(lhs[__ref_index]).to.not.be.ok;
-    expect(rhs[__refs_length]).to.not.be.ok;
-    expect(lhs[__context]).to.not.be.ok;
+    expect(lhs[__innerRefs]).to.not.be.ok;
+    expect(rhs[__priorRefs]).to.not.be.ok;
+    expect(lhs[__refTarget]).to.not.be.ok;
 
     return toObservable(testRunner.get(model, _.cloneDeep(query), output)).
         do(noOp, noOp, function() {
-            expect(lhs[__ref_index]).to.equal(0);
-            expect(rhs[__refs_length]).to.equal(1);
-            expect(rhs[__ref + lhs[__ref_index]]).to.equal(lhs);
-            expect(lhs[__context]).to.equal(rhs);
+
+            var innerRefs = lhs[__innerRefs];
+            expect(innerRefs[lhs[__refTarget]]).to.equal(rhs);
+            expect(rhs[__priorRefs][lhs[__id]]).to.equal(lhs);
+
+            for (var refKey in innerRefs) {
+                var target = innerRefs[refKey];
+                var priorRefs = target[__priorRefs];
+                expect(priorRefs[lhs[__id]]).to.equal(lhs);
+            }
         });
 }
 
@@ -86,15 +97,21 @@ function setTest(query, output) {
     var lhs = model._root.cache.genreList[0];
     var rhs = model._root.cache.lists.abcd;
 
-    expect(lhs[__ref_index]).to.not.be.ok;
-    expect(rhs[__refs_length]).to.not.be.ok;
-    expect(lhs[__context]).to.not.be.ok;
+    expect(lhs[__innerRefs]).to.not.be.ok;
+    expect(rhs[__priorRefs]).to.not.be.ok;
+    expect(lhs[__refTarget]).to.not.be.ok;
 
     return toObservable(testRunner.set(model, _.cloneDeep(query), output)).
         do(noOp, noOp, function() {
-            expect(lhs[__ref_index]).to.equal(0);
-            expect(rhs[__refs_length]).to.equal(1);
-            expect(rhs[__ref + lhs[__ref_index]]).to.equal(lhs);
-            expect(lhs[__context]).to.equal(rhs);
+
+            var innerRefs = lhs[__innerRefs];
+            expect(innerRefs[lhs[__refTarget]]).to.equal(rhs);
+            expect(rhs[__priorRefs][lhs[__id]]).to.equal(lhs);
+
+            for (var refKey in innerRefs) {
+                var target = innerRefs[refKey];
+                var priorRefs = target[__priorRefs];
+                expect(priorRefs[lhs[__id]]).to.equal(lhs);
+            }
         });
 }
