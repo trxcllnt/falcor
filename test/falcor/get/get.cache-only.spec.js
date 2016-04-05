@@ -32,7 +32,7 @@ describe('Cache Only', function() {
                 }).
                 subscribe(noOp, done, done);
         });
-        it('should just complete on empty paths.', function(done) {
+        xit('should just complete on empty paths.', function(done) {
             var model = new Model({
                 cache: cacheGenerator(0, 1)
             });

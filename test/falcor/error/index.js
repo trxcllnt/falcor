@@ -71,7 +71,9 @@ describe("Error", function() {
                 expect(clean(onNext.getCall(0).args[0]), 'json from onNext').to.deep.equals({
                     json: {
                         test: {
+                            $keys: {to:5},
                             0: {summary: "in cache"},
+                            1: {}, 2: {}, 3: {}, 4: {},
                             5: {summary: "in cache"}
                         }
                     }

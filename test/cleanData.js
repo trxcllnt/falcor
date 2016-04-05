@@ -14,7 +14,7 @@ module.exports = {
         return convertNodes(null, null, obj, transform);
     },
     stripDerefAndVersionKeys: function(item) {
-        strip.apply(null, [item, '$size'].concat(internalKeys));
+        strip.apply(null, [item, '$size', '$version'].concat(internalKeys));
         return item;
     }
 };

@@ -103,7 +103,7 @@ describe("Special Cases", function() {
 
         var x = model._getPathValuesAsPathMap(model, get, [{}]).values[0];
 
-        expect(x).to.deep.equals({
+        expect(cleanStrip(x)).to.deep.equals({
             json: {
                 genreList: {
                     1: {
@@ -111,12 +111,9 @@ describe("Special Cases", function() {
                             "summary": {
                                 "title": "Running Man",
                                 "url": "/movies/553"
-                            },
-                            "$path": ["videos", 553]
-                        },
-                        "$path": ["lists", "1x5x"]
-                    },
-                    "$path": ["genreList"]
+                            }
+                        }
+                    }
                 }
             }
         });

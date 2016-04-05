@@ -67,22 +67,21 @@ describe('References', function() {
     });
 
     it('should ensure that values are followed correctly when through references and previous paths have longer lengths to litter the requested path.', function() {
-        var to = {
-            reference: {
-                title: 'Title'
-            },
-            toValue: 'Title'
-        };
-        to.$path = ['to'];
-        to.reference.$path = ['too'];
-
         getCoreRunner({
             input: [
                 ['to', ['reference', 'toValue'], 'title'],
             ],
             output: {
                 json: {
-                    to: to
+                    to: {
+                        $path: ['to'],
+                        $keys: ["reference", "toValue"],
+                        reference: {
+                            $path: ['too'],
+                            title: 'Title'
+                        },
+                        toValue: 'Title'
+                    }
                 }
             },
             cache: referenceCache
@@ -99,20 +98,20 @@ describe('References', function() {
                 json: {
                     lolomo: {
                         $path: ['lolomos', 1234],
-                        $__refPath: ['lolomos', 1234],
-                        $__toReference: ['lolomo'],
+                        $refPath: ['lolomos', 1234],
+                        $toReference: ['lolomo'],
                         0: {
                             $path: ['lists', 'A'],
-                            $__refPath: ['lists', 'A'],
-                            $__toReference: ['lolomos', 1234, 0],
+                            $refPath: ['lists', 'A'],
+                            $toReference: ['lolomos', 1234, 0],
                             0: {
                                 $path: ['lists', 'A', 0],
-                                $__refPath: ['lists', 'A'],
-                                $__toReference: ['lolomos', 1234, 0],
+                                $refPath: ['lists', 'A'],
+                                $toReference: ['lolomos', 1234, 0],
                                 item: {
                                     $path: ['videos', 0],
-                                    $__refPath: ['videos', 0],
-                                    $__toReference: ['lists', 'A', 0, 'item'],
+                                    $refPath: ['videos', 0],
+                                    $toReference: ['lists', 'A', 0, 'item'],
                                     title: 'Video 0'
                                 }
                             }

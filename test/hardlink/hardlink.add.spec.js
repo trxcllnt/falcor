@@ -19,11 +19,6 @@ var __innerRefs = require("./../../lib/internal/innerRefs");
 var __priorRefs = require("./../../lib/internal/priorRefs");
 var __refTarget = require("./../../lib/internal/refTarget");
 
-var __ref = require("./../../lib/internal/ref");
-var __context = require("./../../lib/internal/context");
-var __ref_index = require("./../../lib/internal/ref-index");
-var __refs_length = require("./../../lib/internal/refs-length");
-
 describe('Adding', function() {
     var getPath = ['genreList', 0, 0, 'summary'];
     var setPath = {path: ['genreList', 0, 'length'], value: 4};
@@ -79,11 +74,7 @@ function getTest(query, output) {
 
     return toObservable(testRunner.get(model, _.cloneDeep(query), output)).
         do(noOp, noOp, function() {
-
             var innerRefs = lhs[__innerRefs];
-            expect(innerRefs[lhs[__refTarget]]).to.equal(rhs);
-            expect(rhs[__priorRefs][lhs[__id]]).to.equal(lhs);
-
             for (var refKey in innerRefs) {
                 var target = innerRefs[refKey];
                 var priorRefs = target[__priorRefs];
@@ -103,11 +94,7 @@ function setTest(query, output) {
 
     return toObservable(testRunner.set(model, _.cloneDeep(query), output)).
         do(noOp, noOp, function() {
-
             var innerRefs = lhs[__innerRefs];
-            expect(innerRefs[lhs[__refTarget]]).to.equal(rhs);
-            expect(rhs[__priorRefs][lhs[__id]]).to.equal(lhs);
-
             for (var refKey in innerRefs) {
                 var target = innerRefs[refKey];
                 var priorRefs = target[__priorRefs];

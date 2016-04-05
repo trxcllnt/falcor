@@ -70,6 +70,7 @@ describe('DataSource and Partial Cache', function() {
                         json: {
                             lolomo: {
                                 0: {
+                                    $keys: {to: 1},
                                     0: {
                                         item: {
                                             title: 'Video 0'
@@ -176,6 +177,7 @@ describe('DataSource and Partial Cache', function() {
                         json: {
                             lolomo: {
                                 0: {
+                                    $keys: {to: 1},
                                     0: {
                                         item: {
                                             title: 'Video 0'
@@ -210,6 +212,7 @@ describe('DataSource and Partial Cache', function() {
                         json: {
                             lolomo: {
                                 0: {
+                                    $keys: {to: 1},
                                     0: {
                                         item: {
                                             title: 'Video 0'
@@ -257,6 +260,7 @@ describe('DataSource and Partial Cache', function() {
                     expect(strip(onNext.getCall(0).args[0])).to.deep.equals({
                         json: {
                             paths: {
+                                $keys: {to:3},
                                 0: 'test',
                                 1: 'test'
                             }
@@ -367,6 +371,7 @@ describe('DataSource and Partial Cache', function() {
                             json: {
                                 lolomo: {
                                     0: {
+                                        $keys: {to:1},
                                         0: {
                                             item: {
                                                 title: 'Video 0'
@@ -381,6 +386,7 @@ describe('DataSource and Partial Cache', function() {
                             json: {
                                 lolomo: {
                                     0: {
+                                        $keys: {to:1},
                                         0: {
                                             item: {
                                                 title: 'Video 0'

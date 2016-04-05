@@ -69,6 +69,7 @@ describe('Cache as DataSource and Cache', function() {
                     testRunner.compare({ json: {
                         genreList: {
                             0: {
+                                $keys: {to: 1},
                                 0: {
                                     summary: {
                                         newValue: '1'

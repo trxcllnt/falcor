@@ -17,6 +17,7 @@ describe('Edges', function() {
             output: {
                 "json": {
                     "videos": {
+                        "$keys": [],
                         "$path": ["videos"]
                     }
                 }
@@ -28,9 +29,7 @@ describe('Edges', function() {
         getCoreRunner({
             input: [['videos']],
             output: {
-                "json": {
-                    "videos": null
-                }
+                "json": {}
             },
             cache: {
                 videos: atom(undefined)

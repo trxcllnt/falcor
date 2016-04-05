@@ -32,8 +32,8 @@ describe('Deref', function() {
         // Cheating in how we are creating the output.  'path' key should not exist
         // at the top level of output.
         delete output.$path;
-        delete output.$__refPath;
-        delete output.$__toReference;
+        delete output.$refPath;
+        delete output.$toReference;
 
         getCoreRunner({
             input: [

@@ -46,11 +46,7 @@ describe('Errors', function() {
         getCoreRunner({
             input: [['reference', 'title']],
             output: {
-                "json": {
-                    "reference": {
-                        "$path": ["reference"]
-                    }
-                }
+                "json": {}
             },
             errors: [{
                 path: ['reference', null],
@@ -110,23 +106,20 @@ describe('Errors', function() {
     });
 
     it('should report both values and errors when error is less length than value path.', function() {
-        var list = {
-            0: {
-                title: 'Hello World'
-            },
-            1: {
-                $path: ["list", 1]
-            }
-        };
-        list.$path = ['list'];
-        list[0].$path = ['to'];
         getCoreRunner({
             input: [
                 ['list', {to: 1}, 'title']
             ],
             output: {
                 json: {
-                    list: list
+                    list: {
+                        $keys: {to: 1},
+                        $path: ['list'],
+                        0: {
+                            $path: ['to'],
+                            title: 'Hello World'
+                        }
+                    }
                 }
             },
             errors: [{

@@ -98,20 +98,42 @@ module.exports = function(testConfig) {
     // We have to strip out parent as well from the output since it will produce
     // infinite recursion.
     clean(seed[0], {strip: ['$size', '$version']});
-    convert(seed[0], { "$path": convertPathKeys });
-    clean(expectedOutput, {strip: ['$size', '$version']});
-    convert(expectedOutput, { "$path": convertPathKeys });
+    convert(seed[0], {
+        $path: convertPathKeys,
+        $refPath: convertPathKeys,
+        $toReference: convertPathKeys
+    });
 
+    clean(expectedOutput, {strip: ['$size', '$version']});
+    convert(expectedOutput, {
+        $path: convertPathKeys,
+        $refPath: convertPathKeys,
+        $toReference: convertPathKeys
+    });
+
+    debugger
     if (expectedOutput) {
         expect(seed[0]).to.deep.equals(expectedOutput);
     }
     if (requestedMissingPaths) {
-        expect(out.requestedMissingPaths).to.deep.equals(requestedMissingPaths);
+        expect({
+            requestedMissingPaths: out.requestedMissingPaths
+        }).to.deep.equals({
+            requestedMissingPaths: requestedMissingPaths
+        });
     }
     if (optimizedMissingPaths) {
-        expect(out.optimizedMissingPaths).to.deep.equals(optimizedMissingPaths);
+        expect({
+            optimizedMissingPaths: out.optimizedMissingPaths
+        }).to.deep.equals({
+            optimizedMissingPaths: optimizedMissingPaths
+        });
     }
     if (errors) {
-        expect(out.errors).to.deep.equals(errors);
+        expect({
+            errors: out.errors
+        }).to.deep.equals({
+            errors: errors
+        });
     }
 };

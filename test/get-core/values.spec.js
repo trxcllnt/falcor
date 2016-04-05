@@ -257,6 +257,7 @@ describe('Values', function() {
               "json": {
                 "lolomo": {
                   "0": {
+                    "$keys": [],
                     "$path": ["lists", "A"]
                   },
                   "$path": ["lolomos", "1234"]

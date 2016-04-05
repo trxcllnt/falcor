@@ -1,7 +1,6 @@
 var $ref = require("falcor-json-graph").ref;
 var strip = require("../support/strip");
 var $atom = require("falcor-json-graph").atom;
-var $refset = require("falcor-json-graph").refset;
 var $pathMapEnvelope = require("../support/pathMapEnvelope");
 
 var expect = require('chai').expect;
@@ -206,7 +205,7 @@ describe("an atom", function() {
     });
 
     describe("in multiple places", function() {
-        it("through a refset that crosses an inner reference", function() {
+        it("through a complex reference that crosses an inner reference", function() {
 
             var lru = new Object();
             var cache = {};
@@ -216,7 +215,7 @@ describe("an atom", function() {
                 getModel({ lru: lru, cache: cache, version: version++ }), [
                     $pathMapEnvelope("grid", $ref("grids['id']")),
                     $pathMapEnvelope("grids['id'][0]", $ref("lists['id']")),
-                    $pathMapEnvelope("grids['id']['action-titles']", $refset("grids['id'][0][0, 1]")),
+                    $pathMapEnvelope("grids['id']['action-titles']", $ref("grids['id'][0][0, 1]")),
                     $pathMapEnvelope("lists['id'][0]", $ref("movies['pulp-fiction']")),
                     $pathMapEnvelope("lists['id'][1]", $ref("movies['kill-bill-1']")),
                     $pathMapEnvelope("movies['pulp-fiction']", "Pulp Fiction"),
@@ -234,7 +233,7 @@ describe("an atom", function() {
                 grid: $ref("grids['id']"),
                 grids: { id: {
                     0: $ref("lists['id']"),
-                    'action-titles': $refset("grids['id'][0][0, 1]")
+                    'action-titles': $ref("grids['id'][0][0, 1]")
                 } },
                 lists: { id: {
                     0: $ref("movies['pulp-fiction']"),
