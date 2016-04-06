@@ -5,6 +5,7 @@ var clean = require('./cleanData').clean;
 var convert = require('./cleanData').convert;
 var internalKeys = require('./../lib/internal');
 var getCachePosition = require('./../lib/get/getCachePosition');
+var collapse = require("falcor-path-utils").collapse;
 
 function convertPathKeys($path) {
     return $path.map(function convertPathKey(keyset) {
@@ -20,6 +21,7 @@ function convertPathKeys($path) {
 
 module.exports = function(testConfig) {
     var isJSONG = testConfig.isJSONG;
+    var shouldCollapse = isJSONG && testConfig.collapse;
 
     // Gets the expected output, if its a
     // function, then call the function to get it.
@@ -103,6 +105,10 @@ module.exports = function(testConfig) {
         $refPath: convertPathKeys,
         $toReference: convertPathKeys
     });
+
+    if (shouldCollapse && Array.isArray(seed[0].paths)) {
+        seed[0].paths = collapse(seed[0].paths);
+    }
 
     clean(expectedOutput, {strip: ['$size', '$version']});
     convert(expectedOutput, {
